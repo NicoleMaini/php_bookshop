@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
     if (substr($img, 0, 8) <> 'https://') {
         $error['img'] = 'Deve essere un indirizzo valido: https://www.exemple.it/images/';
     }
-    if (strlen($title) === 0 || strlen($title) > 25) {
+    if (strlen($author) === 0 || strlen($author) > 25) {
         $error['author'] = 'La lunghezza max 25 car.';
     };
 
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
     if (substr($img, 0, 8) <> 'https://') {
         $error['img'] = 'Deve essere un indirizzo valido: https://www.exemple.it/images/';
     }
-    if (strlen($title) === 0 || strlen($title) > 25) {
+    if (strlen($author) === 0 || strlen($author) > 25) {
         $error['author'] = 'La lunghezza max 25 car.';
     };
 
@@ -116,7 +116,7 @@ include __DIR__ . '/includes/searchbar.php'; ?>
             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="description" value="<?= $details <> null ? "$details[description]" : "$description" ?>"></textarea>
             <label for="floatingTextarea">Inserisci la trama</label>
         </div>
-        <button type="submit" class="btn btn-outline-warning small">MODIFICA</button>
+        <button type="submit" class="btn btn-outline-warning small"><?= $_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add' ? "MODIFICA" : "AGGIUNGI"  ?></button>
         <a href="./index.php" class="btn btn-outline-success small">TORNA IN HOME</a>
     </form>
 </div>

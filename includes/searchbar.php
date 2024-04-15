@@ -1,3 +1,14 @@
+<?php
+include __DIR__ . '/database.php';
+// reuperiavo hli iggetti dal database 
+$stmt = $pdo->query('SELECT * FROM libri');
+$search = $_GET['search'] ?? ""; // se non c'è è stringa vuota
+$stmt = $pdo->prepare("SELECT * FROM libri WHERE title LIKE ?");
+$stmt->execute([
+    "%$search%"
+]);
+?>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">PHP-Bookshoop</a>
@@ -20,7 +31,7 @@
                 </li>
             </ul>
             <form class="d-flex me-2" role="search">
-                <input class="form-control me-2" type="search" placeholder="Cerca un libro..." aria-label="Search">
+                <input class="form-control me-2" type="search" name="search" value="<?= $search ?>" placeholder="Cerca un libro..." aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Cerca</button>
             </form>
             <a href='/php_bookshop/form.php?add' class='btn btn-outline-primary'>+</a>

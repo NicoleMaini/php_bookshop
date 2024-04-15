@@ -6,7 +6,7 @@ $stmt = $pdo->query('SELECT * FROM libri');
 include __DIR__ . '/includes/header_part.php';
 include __DIR__ . '/includes/searchbar.php'; ?>
 
-<div class="container-md m-5">
+<div class="container-md m-5 mx-auto">
     <div class="row">
         <?php foreach ($stmt as $book) {
             echo  "<div class='col-2'>

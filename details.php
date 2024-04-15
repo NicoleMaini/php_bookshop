@@ -10,7 +10,7 @@ $book = $stmt->fetch();
 include __DIR__ . '/includes/header_part.php';
 include __DIR__ . '/includes/searchbar.php'; ?>
 
-<div class="container-md m-5  p-5">
+<div class="container-md m-5 mx-auto p-5">
     <div class='d-flex'>
         <div style="width: 36rem;"><img src=<?= $book['img'] ?> class='card-img-top w-100 h-100 object-fit-cover' alt='...'></div>
         <div class='card-body ms-3'>

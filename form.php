@@ -2,9 +2,9 @@
 include __DIR__ . '/includes/database.php';
 // inserire il database
 
-$error = [];
 
 if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
+
     $id = $_GET['id'];
 
     $stmt = $pdo->prepare("SELECT * FROM libri WHERE id = ?");
@@ -18,7 +18,20 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
     $genre = $_POST['genre'] ?? $details['genre'];
     $description = $_POST['description'] ?? $details['description'];
 
-    if ($error == []) {
+    $error = [];
+
+    if (strlen($title) === 0 || strlen($title) > 50) {
+        $error['title'] = 'La lunghezza max 50 car.';
+    };
+
+    if (substr($img, 0, 8) <> 'https://') {
+        $error['img'] = 'Deve essere un indirizzo valido: https://www.exemple.it/images/';
+    }
+    if (strlen($title) === 0 || strlen($title) > 25) {
+        $error['author'] = 'La lunghezza max 25 car.';
+    };
+
+    if ($error === []) {
         $stmt = $pdo->prepare("UPDATE libri SET title = :title, img = :img, author = :author, year = :year, genre = :genre, description = :description WHERE id = :id");
         $stmt->execute([
             'id' => $id,
@@ -29,7 +42,7 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
             'genre' => $genre,
             'description' => $description,
         ]);
-        header("Location: /php_bookshop/index.php");
+        // header("Location: /php_bookshop/index.php");
     }
 } else {
     $details = null;
@@ -41,6 +54,18 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
     $genre = $_POST['genre'] ?? "";
     $description = $_POST['description'] ?? "";
 
+    $error = [];
+
+    if (strlen($title) === 0 || strlen($title) > 50) {
+        $error['title'] = 'La lunghezza max 50 car.';
+    };
+    if (substr($img, 0, 8) <> 'https://') {
+        $error['img'] = 'Deve essere un indirizzo valido: https://www.exemple.it/images/';
+    }
+    if (strlen($title) === 0 || strlen($title) > 25) {
+        $error['author'] = 'La lunghezza max 25 car.';
+    };
+
     if ($error == []) {
         $stmt = $pdo->prepare("INSERT INTO libri (title, img, author, year, genre, description) VALUES (:title, :img, :author, :year, :genre, :description)");
         $stmt->execute([
@@ -51,6 +76,7 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
             'genre' => $genre,
             'description' => $description,
         ]);
+        header("Location: /php_bookshop/index.php");
     }
 }
 
@@ -81,17 +107,21 @@ include __DIR__ . '/includes/searchbar.php'; ?>
     <form action="" method="post">
         <input type="hidden" name="id" value="<?= $id ?>">
         <div class="form-floating mb-3">
-
             <input type="text" class="form-control" id="floatingInput" name="title" value="<?= $details <> null ? "$details[title]" : "$title" ?>">
             <label for="floatingInput">Inserisci il titolo</label>
+            <?= isset($error['title']) ? "$error[title]" : '' ?>
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" name="img" value="<?= $details <> null ? "$details[img]" : "$img" ?>">
             <label for="floatingInput">Inserisci il link all'immagine</label>
+            <?= isset($error['img']) ? "$error[img]" : '' ?>
+
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" name="author" value="<?= $details <> null ? "$details[author]" : "$author" ?>">
             <label for="floatingInput">Inserisci l'autore</label>
+            <?= isset($error['author']) ? "$error[author]" : '' ?>
+
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="floatingInput" name="year" value="<?= $details <> null ? "$details[year]" : "$year" ?>">

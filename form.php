@@ -81,25 +81,6 @@ if ($_SERVER["REQUEST_URI"] !== '/php_bookshop/form.php?add') {
 }
 
 
-// $error = [];
-
-// if (strlen($number) < 10) {
-//     $error['number'] = 'Please provide a valid telephon number.';
-// };
-
-// if (strlen($password) < 8) {
-//     $error['password'] = 'Please provide a valid password (min length 8).';
-// };
-
-// if ($error == [] && isset($_POST['checkbox'])) {
-//     header('location: /u4-w13/d2-success.php');
-// };
-
-// print_r($error);
-
-
-
-
 include __DIR__ . '/includes/header_part.php';
 include __DIR__ . '/includes/searchbar.php'; ?>
 
